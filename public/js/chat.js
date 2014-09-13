@@ -1,14 +1,14 @@
 var chatApp = angular.module('chat', ['firebase']);
-var matchId;
 
 chatApp.controller('chatController', ['$scope', '$firebase',
     function($scope, $firebase) {
       var baseRef = new Firebase("https://tokku.firebaseio.com/");
 
+      var matchId;
       var waitingRef = baseRef.child('waiting');
-      var chatroomRef = baseRef.child('chatroomRef');
+      var chatroomRef = baseRef.child('chatroom');
       var privateRoomRef = baseRef;
-      var selfIdRef = null;
+      $scope.id = null;
 
       $scope.matched = false;
       $scope.loading = false;
@@ -17,7 +17,7 @@ chatApp.controller('chatController', ['$scope', '$firebase',
         $firebase(waitingRef).$push({
             matched: false
           }).then(function(newChildRef) {
-            selfIdRef = newChildRef.name();
+            $scope.id = newChildRef.name();
             console.log("added record with id " + newChildRef.name());
           });
 
@@ -37,18 +37,18 @@ chatApp.controller('chatController', ['$scope', '$firebase',
               privateRoomRef = chatroomRef.child(roomId);
               $scope.matched = true;
               $scope.messages = $firebase(privateRoomRef).$asArray();
-              $firebase(waitingRef).$remove(selfIdRef);
+              $firebase(waitingRef).$remove($scope.id);
             });
           } else {
             console.log("no match");
             $scope.loading = true;
-            var room = $firebase(waitingRef.child(selfIdRef)).$asObject();
+            var room = $firebase(waitingRef.child($scope.id)).$asObject();
             room.$watch(function() {
               if(room.matched) {
                 privateRoomRef = chatroomRef.child(room.matched);
                 $scope.matched = true;
                 $scope.messages = $firebase(privateRoomRef).$asArray();
-                $firebase(waitingRef).$remove(selfIdRef);
+                $firebase(waitingRef).$remove($scope.id);
 
                 $scope.loading = false;
               }
@@ -65,11 +65,19 @@ chatApp.controller('chatController', ['$scope', '$firebase',
         if (e.keyCode === 13 && $scope.msg) {
           var name = $scope.name || 'anonymous';
           $scope.messages.$add({
+            id: $scope.id,
             from: name,
             body: $scope.msg
           });
           $scope.msg = "";
         }
+      }
+
+      window.onbeforeunload = closingCode;
+      function closingCode(){
+        if($scope.id != null)
+          $firebase(waitingRef).$remove($scope.id);
+        return null;
       }
     }
 

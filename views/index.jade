@@ -9,9 +9,10 @@ block scripts
 
 block content
   h1 Tokku
-
-  div.chatbox(ng-controller="chatController")
-    div.splash(ng-hide='matched || loading')
+  
+  .chatbox(ng-controller="chatController")
+    input(ng-model='name')
+    .splash(ng-hide='matched || loading')
       button.new-match(ng-click='findNewMatch()') Find Match
     .spinner(ng-hide='!loading')
       .bounce1
@@ -20,8 +21,8 @@ block content
 
     div.chat(ng-hide='!matched')
       ul#messages
-        li.line(ng-repeat='msg in messages')
-          strong.name {{msg.from}}
+        li.line(ng-repeat='msg in messages', ng-class='{test: msg.id == id}')
+          strong.name {{msg.from}} 
           span.text {{msg.body}}
 
       input#messageInput(ng-model='msg',ng-keydown="addMessage($event)",type='text', placeholder='Type a message...')
