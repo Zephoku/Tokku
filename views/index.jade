@@ -20,24 +20,27 @@ block content
         li
           a.button(href="#") Link 3
   
-  .row
-    .large-12.columns
-      .chatbox(ng-controller="chatController")
-        .splash(ng-hide='matched || loading')
-          button.new-match(ng-click='findNewMatch()') Find Match
-        .spinner(ng-hide='!loading')
-          .bounce1
-          .bounce2
-          .bounce3
+  .row.chatbox(ng-controller="chatController")
+    .large-8.columns
+      .splash(ng-hide='matched || loading')
+        button.new-match(ng-click='findNewMatch()') Find Match
+      .spinner(ng-hide='!loading')
+        .bounce1
+        .bounce2
+        .bounce3
     
-        .chat-container(ng-hide='!matched')
-          input(ng-model='name')
-          div.chat
-            ul#messages
-              li.line(ng-repeat='msg in messages', ng-class='{test: msg.id == id}')
-                strong.name {{msg.from}} 
-                span.text {{msg.body}}
-          input#messageInput(ng-model='msg',ng-keydown="addMessage($event)",type='text', placeholder='Type a message...')
+      .chat-container(ng-hide='!matched')
+        input(ng-model='name')
+        div.chat
+          ul#messages
+            li.line(ng-repeat='msg in messages', ng-class='{test: msg.id == id}')
+              strong.name {{msg.from}} 
+              span.text {{msg.body}}
+        input#messageInput(ng-model='msg',ng-keydown="addMessage($event)",type='text', placeholder='Type a message...')
+    .large-4.columns
+      .ul#suggestions
+        li.suggestion(ng-repeat='sgt in suggestions')
+          .text {{sgt}}
   .row
     .large-4.columns
     .large-8.columns
