@@ -3,6 +3,10 @@ body {
   font-family: 'Roboto', sans-serif;
   font-weight: 300; }
 
+.chat {
+  height: 400px;
+  overflow: scroll; }
+
 .test {
   color: #00BEAB; }
 

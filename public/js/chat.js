@@ -17,6 +17,7 @@ chatApp.controller('chatController', ['$scope', '$firebase',
         $firebase(waitingRef).$push({
             matched: false
           }).then(function(newChildRef) {
+            console.log("Waiting Pushed");
             $scope.id = newChildRef.name();
             console.log("added record with id " + newChildRef.name());
           });
@@ -27,7 +28,10 @@ chatApp.controller('chatController', ['$scope', '$firebase',
           if(potentialMatches.length > 1) {
             matchId = potentialMatches[0].$id;
             $firebase(chatroomRef).$push({
-              roomId: "init"
+              "-A": {
+                from: "System",
+                body: "Matched!"
+              }
             }).then(function(newChildRef) {
               var roomId = newChildRef.name();
               var matchRef = waitingRef.child(matchId);
@@ -38,6 +42,10 @@ chatApp.controller('chatController', ['$scope', '$firebase',
               $scope.matched = true;
               $scope.messages = $firebase(privateRoomRef).$asArray();
               $firebase(waitingRef).$remove($scope.id);
+      $scope.messages.$watch(function() {
+        console.log($(".cha"))
+        $(".chat").scrollTop($(".chat")[0].scrollHeight-100);
+      });
             });
           } else {
             console.log("no match");
@@ -51,6 +59,9 @@ chatApp.controller('chatController', ['$scope', '$firebase',
                 $firebase(waitingRef).$remove($scope.id);
 
                 $scope.loading = false;
+      $scope.messages.$watch(function() {
+        $(".chat").scrollTop($(".chat")[0].scrollHeight);
+      });
               }
             });
 
@@ -62,6 +73,9 @@ chatApp.controller('chatController', ['$scope', '$firebase',
 
       $scope.messages = null;
       $scope.addMessage = function(e) {
+      $scope.messages.$watch(function() {
+        $(".chat").scrollTop($(".chat")[0].scrollHeight);
+      });
         if (e.keyCode === 13 && $scope.msg) {
           var name = $scope.name || 'anonymous';
           $scope.messages.$add({
@@ -71,6 +85,7 @@ chatApp.controller('chatController', ['$scope', '$firebase',
           });
           $scope.msg = "";
         }
+        $(".chat").scrollTop($(".chat")[0].scrollHeight);
       }
 
       window.onbeforeunload = closingCode;
