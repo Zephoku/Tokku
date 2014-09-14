@@ -18,6 +18,10 @@ chatApp.controller('chatController',
       var level6 = true;
       $scope.id = null;
 
+      $scope.color = {
+        'background-color': 'rgba(22,22,22,.4)'
+      };
+
       $scope.matched = false;
       $scope.loading = false;
       $scope.suggestions = [];
@@ -61,6 +65,10 @@ chatApp.controller('chatController',
 
               if (length % 5 == 0) {
                 var sug = getNextSuggestion(suggestions);
+                    var score = getSentimentLevel();
+                    console.log(score);
+                    $scope.color = generateRGBA(score);
+                console.log($scope.color);
                 if (sug != null)
                   $scope.suggestions.unshift(sug);
               }
@@ -87,6 +95,10 @@ chatApp.controller('chatController',
 
                   if (length % 5 == 0) {
                     var sug = getNextSuggestion(suggestions);
+                    var score = getSentimentLevel();
+                    console.log(score);
+                    $scope.color = generateRGBA(score);
+                  console.log($scope.color);
                     if (sug != null)
                       $scope.suggestions.unshift(sug);
                   }
@@ -101,6 +113,7 @@ chatApp.controller('chatController',
         });
 
       }
+
 
       $scope.messages = null;
       $scope.addMessage = function(e) {
@@ -149,6 +162,26 @@ chatApp.controller('chatController',
       error(function(data, status, headers, config) {
         // log error
       });
+
+      function generateRGBA(score) {
+        var red = Math.floor(222 * (1 - score));
+        console.log(red);
+        var green = Math.floor(222 * score);
+        console.log(green);
+        return {
+          'background-color': 'rgba('+red+','+green+',0,0.4)'
+        };
+      }
+
+      function getSentimentLevel() {
+        return 0.7;
+        console.log('/getSentiment/' + privateRoomRef.name()+'/');
+        $http.get('/getSentiment/' + privateRoomRef.name()+'/').
+          success(function(data, status, headers, config) {
+            console.log("Success");
+            return data.score + 0.5;
+        })
+      }
     });
 
 function getNextSuggestion(suggestions) {

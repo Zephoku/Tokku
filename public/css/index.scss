@@ -194,3 +194,27 @@ ul {
     -webkit-transform: scale(1.0);
   }
 }
+
+.box {
+  height: 100px;
+  width: 100px;
+  margin: auto;
+  -webkit-border-radius: 100px;
+  border-radius: 100px;
+}
+
+.box:hover {
+  background-color: green;
+}
+
+.info {
+  color: #aaa;
+  height: 440px;
+  margin: 0;
+  -webkit-transition: all 1000ms ease;
+  -moz-transition: all 1000ms ease;
+  -ms-transition: all 1000ms ease;
+  -o-transition: all 1000ms ease;
+  transition: all 1000ms ease;
+}
+
