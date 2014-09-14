@@ -170,7 +170,7 @@ function getNextSuggestion(suggestions) {
       console.log("In concept");
       toReturn =  {
         category: 'concepts',
-        text: suggestions.concepts.shift(),
+        text: "Try mentioning " + suggestions.concepts.shift() + "."
       };
     }
     if (rand == 2) {
@@ -180,7 +180,7 @@ function getNextSuggestion(suggestions) {
       console.log("In tax");
       toReturn =  {
         category: 'taxonomy',
-        text: suggestions.taxonomy.shift(),
+        text: "Consider talking about " + suggestions.taxonomy.shift() + "."
       };
     }
     if (rand == 3) {
@@ -190,7 +190,7 @@ function getNextSuggestion(suggestions) {
       console.log("In keyt");
       toReturn =  {
         category: 'keywords',
-        text: suggestions.keywords.shift(),
+        text: "Others talked about " + suggestions.keywords.shift() + "."
       };
     }
     
