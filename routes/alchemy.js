@@ -24,8 +24,11 @@ exports.getSubject = function(req, res) {
         customResponse.taxonomy = taxToResponse(responseTax.taxonomy);
         alchemy.concepts('text', text, {}, function(responseConcept) {
           customResponse.concepts = conceptsToResponse(responseConcept.concepts);
-          res.set('Content-Type', 'application/json');
-          res.send(customResponse);
+            alchemy.keywords('text', text, {}, function(responseKeywords) {
+            customResponse.keywords = conceptsToResponse(responseKeywords.keywords);
+            res.set('Content-Type', 'application/json');
+            res.send(customResponse);
+          });
         });
       });
 

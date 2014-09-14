@@ -59,41 +59,10 @@ chatApp.controller('chatController',
               console.log(suggestions);
               console.log("Length: " + length);
 
-              if (length >= 5 && length < 10) {
-                if (level1) {
-                  $scope.suggestions.push(suggestions[0]);
-                  level1 = false;
-                }
-              }
-              if (length >= 10 && length < 15) {
-                if (level2) {
-                  $scope.suggestions.push(suggestions[1]);
-                  level2 = false;
-                }
-              }
-              if (length >= 15 && length < 20) {
-                if (level3) {
-                  $scope.suggestions.push(suggestions[2]);
-                  level3 = false;
-                }
-              }
-              if (length >= 20 && length < 25) {
-                if (level4) {
-                  $scope.suggestions.push(suggestions[3]);
-                  level4 = false;
-                }
-              }
-              if (length >= 25 && length < 30) {
-                if (level5) {
-                  $scope.suggestions.push(suggestions[4]);
-                  level5 = false;
-                }
-              }
-              if (length >= 30 && length < 35) {
-                if (level6) {
-                  $scope.suggestions.push(suggestions[5]);
-                  level6 = false;
-                }
+              if (length % 5 == 0) {
+                var sug = getNextSuggestion(suggestions);
+                if (sug != null)
+                  $scope.suggestions.push(sug);
               }
 
             });
@@ -116,44 +85,10 @@ chatApp.controller('chatController',
                   console.log(suggestions);
                   console.log("Length: " + length);
 
-                  if (length >= 5 && length < 10) {
-                    if (level1) {
-                      console.log(level1);
-                      $scope.suggestions.push(suggestions[0]);
-                      level1 = false;
-                      console.log("-1");
-                    }
-                  }
-                  if (length >= 10 && length < 15) {
-                    if (level2) {
-                      $scope.suggestions.push(suggestions[1]);
-                      level2 = false;
-                      console.log("-2");
-                    }
-                  }
-                  if (length >= 15 && length < 20) {
-                    if (level3) {
-                      $scope.suggestions.push(suggestions[2]);
-                      level3 = false;
-                    }
-                  }
-                  if (length >= 20 && length < 25) {
-                    if (level4) {
-                      $scope.suggestions.push(suggestions[3]);
-                      level4 = false;
-                    }
-                  }
-                  if (length >= 25 && length < 30) {
-                    if (level5) {
-                      $scope.suggestions.push(suggestions[4]);
-                      level5 = false;
-                    }
-                  }
-                  if (length >= 30 && length < 35) {
-                    if (level6) {
-                      $scope.suggestions.push(suggestions[5]);
-                      level6 = false;
-                    }
+                  if (length % 5 == 0) {
+                    var sug = getNextSuggestion(suggestions);
+                    if (sug != null)
+                      $scope.suggestions.push(sug);
                   }
 
                 });
@@ -205,17 +140,61 @@ chatApp.controller('chatController',
 
       $http.get('/getSubject/').
         success(function(data, status, headers, config) {
-          console.log(data);
-          for (var i in data.concepts ) {
-            suggestions.push(data.concepts[i]);
-          }
-          for (var i in data.taxonomy ) {
-            suggestions.push(data.taxonomy[i]);
-          }
-          console.log(suggestions);
+          suggestions = data;
         }).
       error(function(data, status, headers, config) {
         // log error
       });
     });
 
+function getNextSuggestion(suggestions) {
+  if (suggestions.length == 0) 
+    return null;
+
+  var toReturn = null;
+
+  console.log("In Suggestion");
+  while(true) {
+    var rand = Math.floor(Math.random() * 3) + 1;
+    var toReturn;
+
+    if (suggestions.concepts.length == 0 &&
+        suggestions.taxonomy.length == 0 &&
+        suggestions.keywords.length == 0)
+      return null;
+
+    if (rand == 1) {
+      if (suggestions.concepts.length == 0) {
+        continue;
+      }
+      console.log("In concept");
+      toReturn =  {
+        category: 'concepts',
+        text: suggestions.concepts.shift(),
+      };
+    }
+    if (rand == 2) {
+      if (suggestions.taxonomy.length == 0) {
+        continue;
+      } 
+      console.log("In tax");
+      toReturn =  {
+        category: 'taxonomy',
+        text: suggestions.taxonomy.shift(),
+      };
+    }
+    if (rand == 3) {
+      if (suggestions.keywords.length == 0) {
+        continue;
+      }
+      console.log("In keyt");
+      toReturn =  {
+        category: 'keywords',
+        text: suggestions.keywords.shift(),
+      };
+    }
+    
+    return toReturn;
+  }
+
+}
