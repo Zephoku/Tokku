@@ -65,31 +65,31 @@ chatApp.controller('chatController',
                   level1 = false;
                 }
               }
-              if (length >= 10 && length < 20) {
+              if (length >= 10 && length < 15) {
                 if (level2) {
                   $scope.suggestions.push(suggestions[1]);
                   level2 = false;
                 }
               }
-              if (length >= 20 && length < 30) {
+              if (length >= 15 && length < 20) {
                 if (level3) {
                   $scope.suggestions.push(suggestions[2]);
                   level3 = false;
                 }
               }
-              if (length >= 30 && length < 40) {
+              if (length >= 20 && length < 25) {
                 if (level4) {
                   $scope.suggestions.push(suggestions[3]);
                   level4 = false;
                 }
               }
-              if (length >= 40 && length < 50) {
+              if (length >= 25 && length < 30) {
                 if (level5) {
                   $scope.suggestions.push(suggestions[4]);
                   level5 = false;
                 }
               }
-              if (length >= 50 && length < 60) {
+              if (length >= 30 && length < 35) {
                 if (level6) {
                   $scope.suggestions.push(suggestions[5]);
                   level6 = false;
@@ -124,32 +124,32 @@ chatApp.controller('chatController',
                       console.log("-1");
                     }
                   }
-                  if (length >= 10 && length < 20) {
+                  if (length >= 10 && length < 15) {
                     if (level2) {
                       $scope.suggestions.push(suggestions[1]);
                       level2 = false;
                       console.log("-2");
                     }
                   }
-                  if (length >= 20 && length < 30) {
+                  if (length >= 15 && length < 20) {
                     if (level3) {
                       $scope.suggestions.push(suggestions[2]);
                       level3 = false;
                     }
                   }
-                  if (length >= 30 && length < 40) {
+                  if (length >= 20 && length < 25) {
                     if (level4) {
                       $scope.suggestions.push(suggestions[3]);
                       level4 = false;
                     }
                   }
-                  if (length >= 40 && length < 50) {
+                  if (length >= 25 && length < 30) {
                     if (level5) {
                       $scope.suggestions.push(suggestions[4]);
                       level5 = false;
                     }
                   }
-                  if (length >= 50 && length < 60) {
+                  if (length >= 30 && length < 35) {
                     if (level6) {
                       $scope.suggestions.push(suggestions[5]);
                       level6 = false;
