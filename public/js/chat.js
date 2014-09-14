@@ -62,7 +62,7 @@ chatApp.controller('chatController',
               if (length % 5 == 0) {
                 var sug = getNextSuggestion(suggestions);
                 if (sug != null)
-                  $scope.suggestions.push(sug);
+                  $scope.suggestions.unshift(sug);
               }
 
             });
@@ -88,7 +88,7 @@ chatApp.controller('chatController',
                   if (length % 5 == 0) {
                     var sug = getNextSuggestion(suggestions);
                     if (sug != null)
-                      $scope.suggestions.push(sug);
+                      $scope.suggestions.unshift(sug);
                   }
 
                 });
@@ -133,8 +133,12 @@ chatApp.controller('chatController',
 
       window.onbeforeunload = closingCode;
       function closingCode(){
-        if($scope.id != null)
-          $firebase(waitingRef).$remove($scope.id);
+        $firebase(waitingRef).$remove($scope.id);
+        $scope.messages.$add({
+          id: $scope.id,
+          from: "System",
+          body: "The other person has disconnected"
+        });
         return null;
       }
 

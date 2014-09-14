@@ -33,10 +33,10 @@ block content
           .chat
             ul#messages
               li.line(ng-repeat='msg in messages', ng-class='{test: msg.id == id}')
-                strong.name {{msg.from}} 
+                strong.name {{msg.from}}:&nbsp; 
                 span.text {{msg.body}}
           input#messageInput(ng-model='msg',ng-keydown="addMessage($event)",type='text', placeholder='Type a message...')
       .large-3.columns
         .ul#suggestions
-          li.suggestion(ng-repeat='sgt in suggestions')
-            .text Try Talking about {{sgt.text}}
+          li.suggestion(ng-repeat='sgt in suggestions', ng-class='{first: $first}')
+            .text {{sgt.text}}

@@ -9,21 +9,23 @@ body {
   height: 100%;
 }
 
-.bg {
-  overflow: hidden;
-}
-
 .suggestion {
-  background-color: rgba(255,255,255, .2);
-  color: #fff;
+  color: #aaa;
 }
 
 ul {
   list-style: none;
 }
 
+.first {
+  color: #A5C4B8;
+}
 #suggestions {
+  background-color: rgba(255,255,255, .2);
   list-style: none;
+  overflow: scroll;
+  height: 440px;
+  font-size: 0.8rem;
 }
 .chat-container {
   h1 {
@@ -55,7 +57,6 @@ ul {
 .chatbox, .match-container{
   height: 100%;
   width: 100%;
-  overflow: hidden;
 }
 
 .match-container {
